@@ -4,7 +4,7 @@
 Password generator through a wordlist.
 You can use this tool to create a new wordlist with numbers and special characters.
 
-### USAGE:
+### USAGE
 
 You must to configure the parameters of the file <a href="https://github.com/guelfoweb/passgen/blob/master/passgen.cfg">passgen.cfg</a><br />
 Start passgen with:
@@ -12,24 +12,27 @@ Start passgen with:
 ./passgen.sh
 </pre>
 <pre>
+[+] Ready for 3691656 passwords
+[+] Password format: wns
+[+] Password Type: Adam1970!
+
+Press [Enter] key to start or [Ctrl+C] key to stop...
+
 Adam1970!
 Adam1970@
 Adam1970$
 Adam1970%
-...
-...
+::
 Adam2000!
 Adam2000@
 Adam2000$
 Adam2000%
-...
-...
+::
 Zuckerberg2012!
 Zuckerberg2012@
 Zuckerberg2012$
 Zuckerberg2012%
-...
-....
+::
 Zuckerberg2013!
 Zuckerberg2013@
 Zuckerberg2013$
@@ -37,7 +40,7 @@ Zuckerberg2013%
 </pre>
 
 
-### FORMAT TYPE:
+### FORMAT TYPE
 <pre>
 wns -> Word + Number + Special Char -> password0!
 wsn -> Word + Special Char + Number -> password!0
