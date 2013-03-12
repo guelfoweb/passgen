@@ -1,8 +1,8 @@
 ### README
 
 
-Password generator through a wordlist.
-You can use this tool to create a new wordlist with numbers and special characters.
+Password generator through a simple wordlist.
+You can use this tool to create a **new wordlist** with **numbers** and **special characters**.
 
 ### USAGE
 
