@@ -7,17 +7,18 @@ You can use this tool to create a new wordlist with numbers and special characte
 USAGE:
 ======
 
-  You must to configure the parameters of the file passgen.cfg
+You must to configure the parameters of the file passgen.cfg
 
 FORMAT TYPE:
 ============
 
-  Word + Number + Special Char => password0!
-  Word + Special Char + Number => password!0
-  Number + Word + Special Char => 0password!
-  Number + Special Char + Word => 0!password
-  Special Char + Number + Word => !0password
-  Special Char + Word + Number => !password0
+wns) Word + Number + Special Char => password0!<br>
+wsn) Word + Special Char + Number => password!0<br>
+nws) Number + Word + Special Char => 0password!<br>
+nsw) Number + Special Char + Word => 0!password<br>
+snw) Special Char + Number + Word => !0password<br>
+swn) Special Char + Word + Number => !password0<br>
+
 
 OTHER
 =====
