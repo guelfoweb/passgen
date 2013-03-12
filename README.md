@@ -2,30 +2,38 @@
 
 
 Password generator through a wordlist.
-You can use this tool to create a new wordlist with numbers and special characters.<br />
+You can use this tool to create a new wordlist with numbers and special characters.
 
 ### USAGE:
 
-You must to configure the parameters of the file *passgen.cfg*
-
+You must to configure the parameters of the file <a href="https://github.com/guelfoweb/passgen/blob/master/passgen.cfg">passgen.cfg</a><br />
+Start passgen with:
 <pre>
 ./passgen.sh
 </pre>
 <pre>
-Password1970!
-Password1970@
-Password1970$
-Password1970%
-............
-Password2000!
-Password2000@
-Password2000$
-Password2000%
-.............
-Password2013!
-Password2013@
-Password2013$
-Password2013%
+Adam1970!
+Adam1970@
+Adam1970$
+Adam1970%
+...
+...
+Adam2000!
+Adam2000@
+Adam2000$
+Adam2000%
+...
+...
+Zuckerberg2012!
+Zuckerberg2012@
+Zuckerberg2012$
+Zuckerberg2012%
+...
+....
+Zuckerberg2013!
+Zuckerberg2013@
+Zuckerberg2013$
+Zuckerberg2013%
 </pre>
 
 
