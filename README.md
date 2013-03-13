@@ -12,7 +12,7 @@ Start passgen with:
 ./passgen.sh
 </pre>
 <pre>
-[+] Ready for 3691656 passwords
+[+] Ready for 211360 passwords
 [+] Password format: wns
 [+] Password Type: Achille0!
 
