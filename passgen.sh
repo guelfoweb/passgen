@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## Password generator with wordlist 
-## passgen.sh v.0.1
+## passgen.sh v.0.2
 ## by Gianni 'guelfoweb' Amato
 
 #
@@ -33,7 +33,7 @@ if $u; then u="."; else u="^"; fi
 echo "[+] Password format: $format"
 echo -n "[+] Password Type: "
 case $format in
-  wns) head -n1 "$wordlist" | sed "s/\b\($u\)/\u\1/" | sed "s/$/$nstart/" | sed "s/$/$specialchar/" ;;
+	wns) head -n1 "$wordlist" | sed "s/\b\($u\)/\u\1/" | sed "s/$/$nstart/" | sed "s/$/$specialchar/" ;;
 	wsn) head -n1 "$wordlist" | sed "s/\b\($u\)/\u\1/" | sed "s/$/$specialchar/" | sed "s/$/$nstart/" ;;
 	nws) head -n1 "$wordlist" | sed "s/\b\($u\)/\u\1/" | sed "s/^/$nstart/" | sed "s/$/$specialchar/" ;;
 	swn) head -n1 "$wordlist" | sed "s/\b\($u\)/\u\1/" | sed "s/$/$nstart/" | sed "s/^/$specialchar/" ;;
@@ -43,27 +43,120 @@ case $format in
 	exit
 esac
 
+timestart=`date +%s`
+grep "^.\{$chars\}$" "$wordlist" | grep -v "à\|è\|é\|ì\|ò\|ù\|'" | sed "s/\b\($u\)/\u\1/" | sort | head -n 10 | while read word;
+	do {
+		for n in $(seq $nstart $nend)
+		do
+			for s in "${specialchar[@]}"
+			do
+				echo $s$n$word > /dev/null
+			done
+		done
+	}
+	done
+timeend=`date +%s`
+timediff=$(( $timeend - $timestart ))
+time=`echo "(($nelements / 10) * ($timediff + 0.1)) / 600" | bc`
+echo "[+] Estimated time: $time min"
+
 echo
 read -p "Press [Enter] key to start or [Ctrl+C] key to stop..."
 echo
 
+
+wns(){
 grep "^.\{$chars\}$" "$wordlist" | grep -v "à\|è\|é\|ì\|ò\|ù\|'" | sed "s/\b\($u\)/\u\1/" | sort | while read word;
 	do {
 		for n in $(seq $nstart $nend)
 		do
 			for s in "${specialchar[@]}"
 			do
-				case $format in
-					wns) echo $word | sed "s/$/$n/" | sed "s/$/$s/" ;;
-					wsn) echo $word | sed "s/$/$s/" | sed "s/$/$n/" ;;
-					nws) echo $word | sed "s/^/$n/" | sed "s/$/$s/" ;;
-					swn) echo $word | sed "s/$/$n/" | sed "s/^/$s/" ;;
-					nsw) echo $word | sed "s/^/$s/" | sed "s/^/$n/" ;;
-					snw) echo $word | sed "s/^/$n/" | sed "s/^/$s/" ;;
-					*) echo "error.."
-					exit
-				esac
+				echo $word$n$s
 			done
 		done
 	}
 	done
+}
+
+wsn(){
+grep "^.\{$chars\}$" "$wordlist" | grep -v "à\|è\|é\|ì\|ò\|ù\|'" | sed "s/\b\($u\)/\u\1/" | sort | while read word;
+	do {
+		for n in $(seq $nstart $nend)
+		do
+			for s in "${specialchar[@]}"
+			do
+				echo $word$s$n
+			done
+		done
+	}
+	done
+}
+
+nws(){
+grep "^.\{$chars\}$" "$wordlist" | grep -v "à\|è\|é\|ì\|ò\|ù\|'" | sed "s/\b\($u\)/\u\1/" | sort | while read word;
+	do {
+		for n in $(seq $nstart $nend)
+		do
+			for s in "${specialchar[@]}"
+			do
+				echo $n$word$s
+			done
+		done
+	}
+	done
+}
+
+swn(){
+grep "^.\{$chars\}$" "$wordlist" | grep -v "à\|è\|é\|ì\|ò\|ù\|'" | sed "s/\b\($u\)/\u\1/" | sort | while read word;
+	do {
+		for n in $(seq $nstart $nend)
+		do
+			for s in "${specialchar[@]}"
+			do
+				echo $s$word$n
+			done
+		done
+	}
+	done
+}
+
+nsw(){
+grep "^.\{$chars\}$" "$wordlist" | grep -v "à\|è\|é\|ì\|ò\|ù\|'" | sed "s/\b\($u\)/\u\1/" | sort | while read word;
+	do {
+		for n in $(seq $nstart $nend)
+		do
+			for s in "${specialchar[@]}"
+			do
+				echo $n$s$word
+			done
+		done
+	}
+	done
+}
+
+snw(){
+grep "^.\{$chars\}$" "$wordlist" | grep -v "à\|è\|é\|ì\|ò\|ù\|'" | sed "s/\b\($u\)/\u\1/" | sort | while read word;
+	do {
+		for n in $(seq $nstart $nend)
+		do
+			for s in "${specialchar[@]}"
+			do
+				echo $s$n$word
+			done
+		done
+	}
+	done
+}
+
+
+case $format in
+	wns) wns ;;
+	wsn) wsn ;;
+	nws) nws ;;
+	swn) swn ;;
+	nsw) nsw ;;
+	snw) snw ;;
+	*) echo "error.."
+	exit
+esac
