@@ -24,10 +24,10 @@ specialchar=(`grep "^specialchar\[[0-9]*\]=" $CONFIG | cut -d"=" -f2`)
 format=`grep "^format=" $CONFIG | cut -d"=" -f2`
 
 
-nelements=`grep -v "à\|è\|é\|ì\|ò\|ù\|'" "$wordlist" | wc -l | cut -d " " -f1 | sed 's/ //'`
+nelements=`grep "^.\{$chars\}$" "$wordlist" | grep -v "à\|è\|é\|ì\|ò\|ù\|'" | wc -l | cut -d " " -f1 | sed 's/ //'`
 nspecials=`grep -c "^specialchar\[[0-9]*\]=" $CONFIG`
 
-echo "[+] Ready for $(( $nelements * $nspecials * $nend )) passwords"
+echo "[+] Ready for $(( $nelements * $nspecials * ($nend + 1) )) passwords"
 
 if $u; then u="."; else u="^"; fi
 echo "[+] Password format: $format"
@@ -42,23 +42,6 @@ case $format in
 	*) echo "error.."
 	exit
 esac
-
-timestart=`date +%s`
-grep "^.\{$chars\}$" "$wordlist" | grep -v "à\|è\|é\|ì\|ò\|ù\|'" | sed "s/\b\($u\)/\u\1/" | sort | head -n 10 | while read word;
-	do {
-		for n in $(seq $nstart $nend)
-		do
-			for s in "${specialchar[@]}"
-			do
-				echo $s$n$word > /dev/null
-			done
-		done
-	}
-	done
-timeend=`date +%s`
-timediff=$(( $timeend - $timestart ))
-time=`echo "(($nelements / 10) * ($timediff + 0.1)) / 600" | bc`
-echo "[+] Estimated time: $time min"
 
 echo
 read -p "Press [Enter] key to start or [Ctrl+C] key to stop..."
