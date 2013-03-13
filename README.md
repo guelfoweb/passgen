@@ -14,7 +14,8 @@ Start passgen with:
 <pre>
 [+] Ready for 3691656 passwords
 [+] Password format: wns
-[+] Password Type: Adam1970!
+[+] Password Type: Achille0!
+[+] Estimated time: 25 min
 
 Press [Enter] key to start or [Ctrl+C] key to stop...
 
