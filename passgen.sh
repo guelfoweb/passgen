@@ -1,8 +1,9 @@
 #!/bin/bash
 
-## Password generator with wordlist 
-## passgen.sh v.0.2
-## by Gianni 'guelfoweb' Amato
+# Password generator with wordlist 
+name="Passgen.sh"
+ver="0.2.1"
+author="Gianni 'guelfoweb' Amato"
 
 #
 # ----------------------------------------------------------------------------
@@ -16,13 +17,56 @@
 CONFIG="passgen.cfg"
 
 wordlist=`grep "^wordlist=" $CONFIG | cut -d"=" -f2`
+newwordlist=`grep "^newwordlist=" $CONFIG | cut -d"=" -f2`
+
+usage(){
+	echo "$name v.$ver by $author"
+	echo "https://github.com/guelfoweb/passgen/"
+	echo
+	echo "Password generator through a simple wordlist. You can use this tool to create a new wordlist with numbers and special characters."
+	echo
+	echo "You must to configure the parameters of the file [passgen.cfg]"
+	echo
+	echo "USAGE"
+	echo "   $0"
+	echo "   $0 -i <file input> -o <file output> "
+	echo
+	echo "OPTION"
+	echo "   -h   this help"
+	echo "   -i   file input"
+	echo "   -o   file output"
+	exit
+}
+
+ARGC=$#
+if [ "$ARGC" -eq 1 ] || [ "$ARGC" -gt 4 ]; then
+	usage
+fi
+if [ "$ARGC" -eq 2 ] && [ "$1" == "-i" ]; then
+	wordlist="$2"
+fi
+if [ "$ARGC" -eq 2 ] && [ "$1" == "-o" ]; then
+	newwordlist="$2"
+fi
+if [ "$ARGC" -eq 4 ]  && [ "$1" == "-i" ] && [ "$3" == "-o" ]; then
+	wordlist="$2"
+	newwordlist="$4"
+fi
+if [ "$ARGC" -eq 4 ]  && [ "$1" == "-o" ] && [ "$3" == "-i" ]; then
+	wordlist="$4"
+	newwordlist="$2"
+fi
+if [ ! -f "$wordlist" ]; then
+	echo "File not exist: $wordlist"
+	exit
+fi
+
 chars=`grep "^chars=" $CONFIG | cut -d"=" -f2`
 u=`grep "^u=" $CONFIG | cut -d"=" -f2`
 nstart=`grep "^nstart=" $CONFIG | cut -d"=" -f2`
 nend=`grep "^nend=" $CONFIG | cut -d"=" -f2`
 specialchar=(`grep "^specialchar\[[0-9]*\]=" $CONFIG | cut -d"=" -f2`)
 format=`grep "^format=" $CONFIG | cut -d"=" -f2`
-
 
 nelements=`grep "^.\{$chars\}$" "$wordlist" | grep -v "à\|è\|é\|ì\|ò\|ù\|'" | wc -l | cut -d " " -f1 | sed 's/ //'`
 nspecials=`grep -c "^specialchar\[[0-9]*\]=" $CONFIG`
@@ -43,10 +87,14 @@ case $format in
 	exit
 esac
 
+echo "[+] File output: $newwordlist"
+
 echo
 read -p "Press [Enter] key to start or [Ctrl+C] key to stop..."
 echo
 
+# Initialize new wordlist
+cat /dev/null > $newwordlist
 
 wns(){
 grep "^.\{$chars\}$" "$wordlist" | grep -v "à\|è\|é\|ì\|ò\|ù\|'" | sed "s/\b\($u\)/\u\1/" | sort | while read word;
@@ -55,7 +103,7 @@ grep "^.\{$chars\}$" "$wordlist" | grep -v "à\|è\|é\|ì\|ò\|ù\|'" | sed "s/
 		do
 			for s in "${specialchar[@]}"
 			do
-				echo $word$n$s
+				echo $word$n$s >> $newwordlist
 			done
 		done
 	}
@@ -69,7 +117,7 @@ grep "^.\{$chars\}$" "$wordlist" | grep -v "à\|è\|é\|ì\|ò\|ù\|'" | sed "s/
 		do
 			for s in "${specialchar[@]}"
 			do
-				echo $word$s$n
+				echo $word$s$n >> $newwordlist
 			done
 		done
 	}
@@ -83,7 +131,7 @@ grep "^.\{$chars\}$" "$wordlist" | grep -v "à\|è\|é\|ì\|ò\|ù\|'" | sed "s/
 		do
 			for s in "${specialchar[@]}"
 			do
-				echo $n$word$s
+				echo $n$word$s >> $newwordlist
 			done
 		done
 	}
@@ -97,7 +145,7 @@ grep "^.\{$chars\}$" "$wordlist" | grep -v "à\|è\|é\|ì\|ò\|ù\|'" | sed "s/
 		do
 			for s in "${specialchar[@]}"
 			do
-				echo $s$word$n
+				echo $s$word$n >> $newwordlist
 			done
 		done
 	}
@@ -111,7 +159,7 @@ grep "^.\{$chars\}$" "$wordlist" | grep -v "à\|è\|é\|ì\|ò\|ù\|'" | sed "s/
 		do
 			for s in "${specialchar[@]}"
 			do
-				echo $n$s$word
+				echo $n$s$word >> $newwordlist
 			done
 		done
 	}
@@ -125,14 +173,15 @@ grep "^.\{$chars\}$" "$wordlist" | grep -v "à\|è\|é\|ì\|ò\|ù\|'" | sed "s/
 		do
 			for s in "${specialchar[@]}"
 			do
-				echo $s$n$word
+				echo $s$n$word >> $newwordlist
 			done
 		done
 	}
 	done
 }
 
-
+started=`date`
+echo "Started: $started"
 case $format in
 	wns) wns ;;
 	wsn) wsn ;;
@@ -143,3 +192,6 @@ case $format in
 	*) echo "error.."
 	exit
 esac
+stopped=`date`
+
+echo "Stopped: $stopped"
