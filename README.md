@@ -11,10 +11,15 @@ Start passgen with:
 <pre>
 ./passgen.sh
 </pre>
+or
+<pre>
+./passgen.sh -i [file input] -o [file output]
+</pre>
 <pre>
 [+] Ready for 211360 passwords
 [+] Password format: wns
 [+] Password Type: Achille0!
+[+] File output: output.txt
 
 Press [Enter] key to start or [Ctrl+C] key to stop...
 
