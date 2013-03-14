@@ -23,6 +23,13 @@ or
 
 Press [Enter] key to start or [Ctrl+C] key to stop...
 
+Started: gio 14 mar 2013, 20.14.19, CET
+Stopped: gio 14 mar 2013, 20.14.52, CET
+</pre>
+<pre>
+cat output.txt
+</pre>
+<pre>
 Adam1970!
 Adam1970@
 Adam1970$
