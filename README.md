@@ -16,7 +16,7 @@ or
 ./passgen.sh -i [file input] -o [file output]
 </pre>
 <pre>
-[+] Ready for 211360 passwords
+[+] Ready for 367920 passwords
 [+] Password format: wns
 [+] Password Type: Achille0!
 [+] File output: output.txt
@@ -26,6 +26,7 @@ Press [Enter] key to start or [Ctrl+C] key to stop...
 Started: gio 14 mar 2013, 20.14.19, CET
 Stopped: gio 14 mar 2013, 20.14.52, CET
 </pre>
+It took a few seconds to generate 367,920 password. Now you can verify the file with the password you just created.
 <pre>
 cat output.txt
 </pre>
