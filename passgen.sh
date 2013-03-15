@@ -71,7 +71,7 @@ format=`grep "^format=" $CONFIG | cut -d"=" -f2`
 nelements=`grep "^.\{$chars\}$" "$wordlist" | grep -v "à\|è\|é\|ì\|ò\|ù\|'" | wc -l | cut -d " " -f1 | sed 's/ //'`
 nspecials=`grep -c "^specialchar\[[0-9]*\]=" $CONFIG`
 
-echo "[+] Ready for $(( $nelements * $nspecials * ($nend + 1) )) passwords"
+echo "[+] Ready for $(( $nelements * $nspecials * ($nend - $nstart + 1) )) passwords"
 
 if $u; then u="."; else u="^"; fi
 echo "[+] Password format: $format"
